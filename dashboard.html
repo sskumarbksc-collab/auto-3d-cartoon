@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>Auto‑3D Cartoon Dashboard</title>
+<style>
+  body {font-family: Arial, sans-serif; margin: 20px; background:#f9f9f9;}
+  #status {font-size: 1.2em; margin-top:10px;}
+  #video {margin-top:20px;}
+  a {color:#0066cc;}
+</style>
+</head>
+<body>
+<h1>🎬 Auto‑3D Cartoon Generator – Monitoring</h1>
+<p>यह पेज आपके Google Drive फ़ोल्डर में चल रहे रेंडर‑जॉब की स्थिति दिखाता है।</p>
+<div id="status">🔄 जॉब शुरू नहीं हुआ – कृपया <a href="https://colab.research.google.com/drive/PLACEHOLDER_NOTEBOOK_ID" target="_blank">Colab नोटबुक</a> चलाएँ।</div>
+<div id="video"></div>
+<script>
+// Simple polling – every 30 seconds fetch status.json if it is public.
+const STATUS_URL = "https://drive.google.com/uc?export=download&id=PLACEHOLDER_STATUS_FILE_ID"; // replace with your shared file id
+function update() {
+  fetch(STATUS_URL)
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data) { document.getElementById('status').textContent = '⚙️ रेंडर प्रक्रिया चल रही है…'; return; }
+      document.getElementById('status').textContent = `✅ वीडियो तैयार: ${data.title}`;
+      const vidDiv = document.getElementById('video');
+      vidDiv.innerHTML = `<video width="640" controls><source src="${data.video_url}" type="video/mp4">Your browser does not support the video tag.</video>`;
+    })
+    .catch(() => {
+      document.getElementById('status').textContent = '🔄 रेंडर प्रक्रिया शुरू नहीं हुई या फ़ाइल सार्वजनिक नहीं है।';
+    });
+}
+setInterval(update, 30000); // 30 sec
+update();
+</script>
+</body>
+</html>

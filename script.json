@@ -1,0 +1,16 @@
+{
+  "title": "Your Video Title",
+  "scenes": [
+    {
+      "character": "hero",
+      "line": "नमस्ते दोस्तों! आज हम एक नई कहानी सुनाने वाले हैं…",
+      "duration": 5
+    },
+    {
+      "character": "sidekick",
+      "line": "वाह! कितनी रोचक लग रही है कहानी!",
+      "duration": 4
+    }
+    // Add more scenes to reach ~900‑1200 seconds
+  ]
+}
